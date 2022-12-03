@@ -25,3 +25,6 @@ https://www.youtube.com/watch?v=Z1RJmh_OqeA&t=375s
 https://stackoverflow.com/questions/73999854/flask-error-runtimeerror-working-outside-of-application-context
 
 https://stackoverflow.com/questions/31684375/automatically-create-requirements-txt
+
+Python Anywhere:
+https://www.youtube.com/watch?v=5jbdkOlf4cY
