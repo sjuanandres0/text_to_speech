@@ -4,6 +4,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instance/test.db'
 db = SQLAlchemy(app)
 
 class Todo(db.Model):
@@ -25,7 +26,7 @@ def index():
         new_task = Todo(content=task_content)
         
         try:
-            # db.session.add(new_task)
+            db.session.add(new_task)
             # db.session.commit()
             return redirect('/')
         except:
@@ -41,7 +42,7 @@ def delete(id):
     task_to_delete = Todo.query.get_or_404(id)
     
     try:
-        # db.session.delete(task_to_delete)
+        db.session.delete(task_to_delete)
         # db.session.commit()
         return redirect('/')
     except:
