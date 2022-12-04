@@ -1,68 +1,63 @@
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instance/test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///people.db'
 db = SQLAlchemy(app)
 
-class Todo(db.Model):
+class People(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(200), nullable=False)
-    ocmpleted = db.Column(db.Integer, default=0)
+    name = db.Column(db.String(200), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
-        return '<Task %r>' % self.id
+        return '<Person %r>' % self.id
 
 
 @app.route('/', methods=['POST','GET'])
 def index():
     if request.method == 'POST':
-        # return 'Hello'
-        task_content = request.form['content']
-        # return task_content
-        new_task = Todo(content=task_content)
+        person_content = request.form['person']
+        new_person = People(name=person_content)
         
         try:
-            db.session.add(new_task)
+            db.session.add(new_person)
             db.session.commit()
             return redirect('/')
         except:
-            return 'There was an issue adding your task'
+            return 'There was an issue adding your person'
 
     else:
-        # return "Hello, World!"
-        tasks = Todo.query.order_by(Todo.date_created).all()
-        return render_template('index.html', tasks=tasks)
+        people = People.query.order_by(People.date_created).all()
+        return render_template('index.html', people=people)
 
 @app.route('/delete/<int:id>')
 def delete(id):
-    task_to_delete = Todo.query.get_or_404(id)
+    person_to_delete = People.query.get_or_404(id)
     
     try:
-        db.session.delete(task_to_delete)
+        db.session.delete(person_to_delete)
         db.session.commit()
         return redirect('/')
     except:
-        return 'There was a problem deleting that task'
+        return 'There was a problem deleting that person'
 
 @app.route('/update/<int:id>', methods=['GET','POST'])
 def update(id):
-    task = Todo.query.get_or_404(id)
+    person = People.query.get_or_404(id)
 
     if request.method == 'POST':
-        task.content = request.form['content']
+        person.name = request.form['person']
         
         try:
             db.session.commit()
             return redirect('/')
         except:
-            return 'There was an issue updating response'
+            return 'There was an issue updating person'
 
     else:
-        return render_template('update.html', task=task)
+        return render_template('update.html', person=person)
 
 if __name__ == "__main__":
     app.run(debug=True)
