@@ -18,32 +18,53 @@ class People(db.Model):
 @app.route('/', methods=['POST','GET'])
 def index():
     if request.method == 'POST':
+        # person_content = request.form['person']
+        # new_person = People(name=person_content)
+        
+        # try:
+        #     db.session.add(new_person)
+        #     db.session.commit()
+        #     return redirect('/settings')
+        # except:
+        #     return 'There was an issue adding your person'
+        return 'Should not happen'
+
+    else:
+        people = People.query.order_by(People.date_created).all()
+        return render_template('index.html', people=people)
+        # return render_template('settings.html', people=people)
+
+
+
+@app.route('/settings', methods=['POST','GET'])
+def settings():
+    if request.method == 'POST':
         person_content = request.form['person']
         new_person = People(name=person_content)
         
         try:
             db.session.add(new_person)
             db.session.commit()
-            return redirect('/')
+            return redirect('/settings')
         except:
             return 'There was an issue adding your person'
 
     else:
         people = People.query.order_by(People.date_created).all()
-        return render_template('index.html', people=people)
+        return render_template('settings.html', people=people)
 
-@app.route('/delete/<int:id>')
+@app.route('/settings/delete/<int:id>')
 def delete(id):
     person_to_delete = People.query.get_or_404(id)
     
     try:
         db.session.delete(person_to_delete)
         db.session.commit()
-        return redirect('/')
+        return redirect('/settings')
     except:
         return 'There was a problem deleting that person'
 
-@app.route('/update/<int:id>', methods=['GET','POST'])
+@app.route('/settings/update/<int:id>', methods=['GET','POST'])
 def update(id):
     person = People.query.get_or_404(id)
 
@@ -52,7 +73,7 @@ def update(id):
         
         try:
             db.session.commit()
-            return redirect('/')
+            return redirect('/settings')
         except:
             return 'There was an issue updating person'
 
