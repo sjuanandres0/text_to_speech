@@ -5,34 +5,33 @@
 {% endblock %}
 
 {% block body %}
-<div class="content">
-    <div class="jumbotron">
-        <div class="container">
-            <h1 class="text-center">Text to Speech</h1>
-            <p class="text-center">Creating a speech from the text your write</p>
-            <hr />
-            <div class="row">
-                <div class="col-lg-12 form-group-lg">
-                    <form action="/go" method="get">
-                        <input type="text" class="form-control form-control-lg" name="query" placeholder="Write some text">
-                        <hr />
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                              Select Voice
-                            </button>
-                            <ul class="dropdown-menu">
-                                {% for person in people %}
-                                <li><a class="dropdown-item" href="#">{{ person.name }}</a></li>
-                                {% endfor %}
-                            </ul>
-                          </div>
-                        <hr />
-                        <div class="col-lg-offset-5">
-                            <button type="submit" class="btn btn-lg btn-success">Generate Speech</button>
-                        </div>
-                    </form>
+<div class="container">
+    <h1 class="text-center">Text to Speech</h1>
+    <p class="text-center">Creating a speech from the text you write</p>
+    <hr />
+    <div class="row">
+        <div class="col-lg-12 form-group-lg">
+            <form action="/go" method="GET">
+                <input type="text" class="form-control form-control-lg" name="query" placeholder="Write some text">
+                <!-- <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea> -->
+                <br />
+                <div class="dropdown d-grid gap-2 col-4 mx-auto">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Select Voice
+                    </button>
+                    <ul class="dropdown-menu">
+                        {% for person in people %}
+                        <li><a class="dropdown-item" href="#">{{ person.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                    </div>
+                <br />
+                <div class="d-grid gap-2 col-4 mx-auto">
+                    <button type="submit" class="btn btn-lg btn-success">Generate Speech</button>
                 </div>
-            </div>
+            </form>
+            <br/>
+            {% block message %}{% endblock %}
         </div>
     </div>
 </div>

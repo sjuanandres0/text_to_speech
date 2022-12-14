@@ -1,0 +1,22 @@
+{% extends 'index.html' %}
+
+{% block message %}
+    <hr />
+    <h4 class="text-center">Text</h4>
+    <p class="text-center"><i>"{{query}}"</i></p>
+    <br />
+    <div class="col-lg-offset-5 text-center">
+        <a target="_blank" href="/output">
+            <button type="submit" class="btn btn-lg btn-primary">Download File</button>
+        </a>
+        <!-- <a target="_blank" href="/getPlotCSV">
+            <button type="submit" class="btn btn-lg btn-primary">Download CSV</button>
+        </a> -->
+    </div>
+    <br />
+    <div class="col-lg-offset-5 text-center">
+        <a target="_blank" href="/">
+            <button type="submit" class="btn btn-lg btn-outline-success">Submit New Text</button>
+        </a>
+    </div>
+{% endblock %}

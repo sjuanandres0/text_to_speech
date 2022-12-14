@@ -6,7 +6,9 @@
 
 {% block body %}
 <div class="container">
-    <h1>t2s People Manager</h1>
+    <h1 class="text-center">Settings</h1>
+    <h4 class="text-center">People Manager</h4>
+    <hr/>
     {% if people|length < 1 %}
     <h4>There are no people. Create one below!</h4>
     {% else %}
@@ -35,7 +37,7 @@
         {% endfor %}
     </table>
     {% endif %}
-    <form action="/" method="POST">
+    <form action="/settings" method="POST">
         <input type="text" name="person" id="person">
         <input type="submit" value="Add Person">
     </form>

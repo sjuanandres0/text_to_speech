@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, Response, send_file
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -79,6 +79,30 @@ def update(id):
 
     else:
         return render_template('update.html', person=person)
+
+@app.route('/go')
+def go():
+    query = request.args.get('query','')
+    return render_template('go.html', query=query)
+
+@app.route('/output')
+def output():
+    return send_file(
+        'output/test_file.mp3',
+        download_name='test_file.mp3',
+        as_attachment=True
+    ) 
+
+# @app.route("/getPlotCSV")
+# def getPlotCSV():
+#     # with open("outputs/Adjacency.csv") as fp:
+#     #     csv = fp.read()
+#     csv = '1,2,3\n4,5,6\n'
+#     return Response(
+#         csv,
+#         mimetype="text/csv",
+#         headers={"Content-disposition":
+#                  "attachment; filename=myplot.csv"})
 
 if __name__ == "__main__":
     app.run(debug=True)
