@@ -27,11 +27,15 @@ def index():
         #     return redirect('/settings')
         # except:
         #     return 'There was an issue adding your person'
-        return 'Should not happen'
+        colour_content = request.form['colour_sel']
+
+
+        return render_template('index.html', people=people, colour=colour_content)
+        # return 'Should not happen'
 
     else:
         people = People.query.order_by(People.date_created).all()
-        return render_template('index.html', people=people)
+        return render_template('index.html', people=people, colour='blue')
         # return render_template('settings.html', people=people)
 
 
@@ -83,7 +87,8 @@ def update(id):
 @app.route('/go')
 def go():
     query = request.args.get('query','')
-    return render_template('go.html', query=query)
+    selected_name = request.args.get('selected_name','')
+    return render_template('go.html', query=query, selected_name=selected_name)
 
 @app.route('/output')
 def output():
@@ -103,6 +108,17 @@ def output():
 #         mimetype="text/csv",
 #         headers={"Content-disposition":
 #                  "attachment; filename=myplot.csv"})
+
+@app.route("/wav")
+def streamwav():
+    def generate():
+        with open("output/test_file.mp3", "rb") as fwav:
+            data = fwav.read(1024)
+            while data:
+                yield data
+                data = fwav.read(1024)
+    return Response(generate(), mimetype="audio/x-wav")
+
 
 if __name__ == "__main__":
     app.run(debug=True)

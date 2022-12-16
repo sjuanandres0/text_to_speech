@@ -15,18 +15,16 @@
                 <input type="text" class="form-control form-control-lg" name="query" placeholder="Write some text">
                 <!-- <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea> -->
                 <br />
-                <div class="dropdown d-grid gap-2 col-4 mx-auto">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Select Voice
-                    </button>
-                    <ul class="dropdown-menu">
+                <div class="dropdown d-grid gap-2 col-6 mx-auto">
+                    <select class="form-select" name="selected_name">
+                        <option selected>Open this select menu</option>
                         {% for person in people %}
-                        <li><a class="dropdown-item" href="#">{{ person.name }}</a></li>
+                            <option value="{{person.name}}">{{person.name}}</option>"
                         {% endfor %}
-                    </ul>
-                    </div>
+                    </select>
+                </div>
                 <br />
-                <div class="d-grid gap-2 col-4 mx-auto">
+                <div class="d-grid gap-2 col-6 mx-auto">
                     <button type="submit" class="btn btn-lg btn-success">Generate Speech</button>
                 </div>
             </form>
@@ -35,4 +33,4 @@
         </div>
     </div>
 </div>
-{% endblock %}
+{% endblock %}s
